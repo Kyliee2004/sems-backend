@@ -4,7 +4,7 @@ services:
     env: node
     region: singapore  # Choose a region closest to your users
     buildCommand: npm install
-    startCommand: node server.js
+    startCommand: node seed.js && node server.js
     envVars:
       - key: NODE_ENV
         value: production
