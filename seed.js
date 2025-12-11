@@ -2,10 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://sems_admin:admin1@sems.nwxmnau.mongodb.net/sems?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://sems_admin:admin1@sems.nwxmnau.mongodb.net/sems?retryWrites=true&w=majority');
 
 // Define Admin Schema (same as in your server.js)
 const adminSchema = new mongoose.Schema({
