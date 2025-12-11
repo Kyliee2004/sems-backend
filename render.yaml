@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: sems-backend
+    env: node
+    region: singapore  # Choose a region closest to your users
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false
+      - key: GMAIL_USER
+        sync: false
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+    healthCheckPath: /test-debug
+    autoDeploy: true
+    plan: free  # or 'starter' for paid plans
