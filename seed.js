@@ -7,20 +7,32 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://sems_admin:admin1@sem
   useUnifiedTopology: true,
 });
 
-// Define User Schema (same as in your server.js)
-const UserSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  role: { type: String, enum: ['admin', 'teacher', 'student'], required: true }
+// Define Admin Schema (same as in your server.js)
+const adminSchema = new mongoose.Schema({
+  adminID: String,
+  firstName: String,
+  middleName: String,
+  lastName: String,
+  email: { type: String, required: true },
+  preferredEmail: String,
+  contactNumber: String,
+  address: String,
+  username: String,
+  password: String,
+  profilePicture: String,
+  role: { type: String, default: 'admin' },
+  resetCode: String,
+  resetCodeExpiry: Date,
+  createdAt: { type: Date, default: Date.now }
 });
 
-const User = mongoose.model('User', UserSchema);
+const Admin = mongoose.model('Admin', adminSchema);
 
 // Seed function
 async function seedDatabase() {
   try {
     // Check if admin already exists
-    const existingAdmin = await User.findOne({ username: 'admin' });
+    const existingAdmin = await Admin.findOne({ username: 'admin' });
     if (existingAdmin) {
       console.log('Admin user already exists');
       return;
@@ -30,7 +42,11 @@ async function seedDatabase() {
     const hashedPassword = await bcrypt.hash('456123', 10);
 
     // Create admin user
-    const admin = new User({
+    const admin = new Admin({
+      adminID: 'ADMIN001',
+      firstName: 'System',
+      lastName: 'Administrator',
+      email: 'admin@sems.com',
       username: 'admin',
       password: hashedPassword,
       role: 'admin'
